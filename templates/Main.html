@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDU Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="absolute top-4 right-4">
+        <a href="/logout">
+            <button
+                class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                Logout
+            </button>
+        </a>
+    </div>
+
+    <div class="container max-w-md px-4 py-8 text-center">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-blue-600 mb-2">EDU Form maker</h1>
+        </header>
+
+        <div class="flex gap-4 justify-center">
+            <a href="/create-form">
+                <button id="createFormBtn"
+                    class="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                    Create Form
+                </button>
+            </a>
+            <a href="/responses">
+                <button id="showResponsesBtn"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+                    Show Responses
+                </button>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Responses</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="container max-w-4xl px-4 py-8 bg-white shadow-lg rounded-lg">
+        <header class="mb-6 text-center">
+            <h1 class="text-3xl font-bold text-blue-600">Submitted Responses</h1>
+        </header>
+
+        {% if entries %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for name, email in entries %}
+            <a href="{{ url_for('person_responses', title=title, email=email) }}"
+                class="block p-4 bg-gray-50 rounded-md shadow hover:bg-gray-200 transition">
+                <h2 class="text-lg font-semibold text-gray-700">{{ name }}</h2>
+                <p class="text-gray-500">{{ email }}</p>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-center text-gray-500">No responses yet.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

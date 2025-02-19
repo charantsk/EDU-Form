@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Questions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div class="container max-w-2xl px-4 py-8 bg-white shadow-lg rounded-lg">
+        <header class="mb-6 text-center">
+            <h1 class="text-3xl font-bold text-blue-600">Form Questions</h1>
+        </header>
+
+        {% if form_questions %}
+        <form action="{{ url_for('submit_form') }}" method="POST" class="space-y-6">
+            <!-- Name Field -->
+            <div class="p-4 bg-gray-50 rounded-md shadow">
+                <label class="block text-lg font-semibold text-gray-700">Name</label>
+                <input type="text" name="name" class="w-full mt-2 p-2 border rounded-md"
+                    placeholder="Enter your name..." required>
+            </div>
+
+            <!-- Email Field -->
+            <div class="p-4 bg-gray-50 rounded-md shadow">
+                <label class="block text-lg font-semibold text-gray-700">Email</label>
+                <input type="email" name="email" class="w-full mt-2 p-2 border rounded-md"
+                    placeholder="Enter your email..." required>
+            </div>
+
+            <input type="hidden" name="title" class="w-full mt-2 p-2 border rounded-md" value="{{ title }}" required>
+
+            {% for question in form_questions %}
+            <div class="p-4 bg-gray-50 rounded-md shadow">
+                <label class="block text-lg font-semibold text-gray-700">{{ question.question }}</label>
+            
+                <input type="hidden" name="question_text_{{ loop.index }}" value="{{ question.question }}">
+            
+                {% if question.question_type == "text" %}
+                <input type="text" name="question_{{ loop.index }}" class="w-full mt-2 p-2 border rounded-md"
+                    placeholder="Your answer...">
+            
+                {% elif question.question_type == "number" %}
+                <input type="number" name="question_{{ loop.index }}" class="w-full mt-2 p-2 border rounded-md"
+                    placeholder="Enter a number...">
+            
+                {% elif question.question_type == "yes_no" %}
+                <div class="mt-2">
+                    <label class="inline-flex items-center space-x-2">
+                        <input type="radio" name="question_{{ loop.index }}" value="Yes" class="text-blue-500">
+                        <span>Yes</span>
+                    </label>
+                    <label class="inline-flex items-center space-x-2 ml-4">
+                        <input type="radio" name="question_{{ loop.index }}" value="No" class="text-red-500">
+                        <span>No</span>
+                    </label>
+                </div>
+            
+                {% elif question.question_type == "multiple_choice" and question.options %}
+                <div class="mt-2">
+                    {% for option in question.options.split(",") %}
+                    <label class="inline-flex items-center space-x-2">
+                        <input type="checkbox" name="question_{{ loop.index }}" value="{{ option.strip() }}" class="text-green-500">
+                        <span>{{ option.strip() }}</span>
+                    </label><br>
+                    {% endfor %}
+                </div>
+            
+                {% else %}
+                <p class="text-red-500">Invalid question type</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="text-center">
+                <button type="submit"
+                    class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-md transition duration-200">
+                    Submit
+                </button>
+            </div>
+        </form>
+        {% else %}
+        <p class="text-center text-gray-500">No questions available for this form.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>
